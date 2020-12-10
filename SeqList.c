@@ -30,7 +30,9 @@ void SeqListCheckCapacity(SL* ps) {
 }
 //Ïú»Ù
 void SeqListDestory(SL* ps) {
-	ps->size = 0;
+	free(ps->array);
+	ps->array = NULL;//·ÀÖ¹Ò°Ö¸Õë
+	ps->size = ps->capacity = 0;
 }
 //Î²²å
 void SeqListPushBack(SL* ps, SLDataType x) {
