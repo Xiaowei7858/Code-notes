@@ -1,0 +1,8 @@
+
+#include"LT.h"
+
+int main() 
+{
+
+	return 0;
+}
