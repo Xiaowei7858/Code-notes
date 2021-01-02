@@ -58,12 +58,13 @@ void ListPushBack(ListNode* pHead, LTDataType x) {
 //双向链表尾删
 void ListPopBack(ListNode* pHead, LTDataType x) {
 	assert(pHead);
-	assert(pHead->_next != NULL);
+	assert(pHead->_next != pHead);
 	ListNode* tail = pHead->_prev;
 	ListNode* tailprev = tail->_prev;
 	tailprev->_next = pHead;
 	pHead->_prev = tailprev;
 	free(tail);
+	tail = NULL;
 }
 //双向链表头插
 void ListPushFront(ListNode* pHead, LTDataType x) {
