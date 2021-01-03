@@ -2,7 +2,8 @@
 
 
 void teststack() {
-
+	Stack ps;
+	//´«&ps;
 }
 int main() {
 	teststack();
