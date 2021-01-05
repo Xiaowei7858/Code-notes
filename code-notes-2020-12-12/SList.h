@@ -16,13 +16,13 @@ SListNode* BuySListNode(SLTDataType x);
 //单链表打印
 void SListPrint(SListNode* plist);
 //单链表尾插
-void SListPushBack(SListNode* plist, SLTDataType x);
+void SListPushBack(SListNode** plist, SLTDataType x);
 //单链表头插
-void SListPushFront(SListNode* plist, SLTDataType x);
+void SListPushFront(SListNode** plist, SLTDataType x);
 //单链表尾删
-void SListPopBack(SListNode* plist);
+void SListPopBack(SListNode** plist);
 //单链表头删
-void SListPopFront(SListNode* plist);
+void SListPopFront(SListNode** plist);
 //单链表查找
 SListNode* SListFind(SListNode* plist, SLTDataType x);
 //单链表在pos位置之后插入x

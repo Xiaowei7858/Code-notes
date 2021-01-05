@@ -1,26 +1,28 @@
 #include"SList.h"
 
 
-void test(SListNode* plist) {
-	SListPushBack(plist, 1);
-	SListPushBack(plist, 2);
-	SListPushBack(plist, 3);
-	SListPushBack(plist, 4);
-	SListPushBack(plist, 5);
-	SListPushBack(plist, 7);
-	SListPushBack(plist, 8);
+void test() {
+	SListNode* plist = (SListNode*)malloc(sizeof(SListNode));
+
+	SListPushBack(&plist, 1);
+	SListPushBack(&plist, 2);
+	SListPushBack(&plist, 3);
+	SListPushBack(&plist, 4);
+	SListPushBack(&plist, 5);
+	SListPushBack(&plist, 7);
+	SListPushBack(&plist, 8);
 	SListPrint(plist);
 	
 	//头插
-	SListPushFront(plist,2);
+	SListPushFront(&plist,2);
 	SListPrint(plist);
 	
 	//单链表尾删
-	SListPopBack(plist);
+	SListPopBack(&plist);
 	SListPrint(plist);
 	
 	//单链表头删
-	SListPopFront(plist);
+	SListPopFront(&plist);
 	SListPrint(plist);
 
 	//单链表查找
@@ -41,8 +43,6 @@ void test(SListNode* plist) {
 }
 
 int main() {
-	SListNode* plist = (SListNode*)malloc(sizeof(SListNode));
-	plist->next = NULL;
-	test(plist);
+	test();
 	return 0;
 }

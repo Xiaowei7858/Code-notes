@@ -22,9 +22,9 @@ void SListPrint(SListNode* plist) {
 	printf("\n");
 }
 //单链表尾插
-void SListPushBack(SListNode* plist, SLTDataType x) {
+void SListPushBack(SListNode** plist, SLTDataType x) {
 	assert(plist);
-	SListNode* cur = plist;
+	SListNode* cur = *plist;
 	SListNode* Node = BuySListNode(x);
 	while (cur->next != NULL) {
 		cur = cur->next;
@@ -41,15 +41,15 @@ void SListPushFront(SListNode* plist, SLTDataType x) {
 	Node->next = cur;
 }
 //单链表尾删
-void SListPopBack(SListNode* plist) {
-	assert(plist);
-	if (plist->next == NULL) return;
-	if (plist->next->next == NULL) {
-		SListNode* last = plist->next;
-		plist->next = NULL;
+void SListPopBack(SListNode** plist) {
+	assert(*plist);
+	if (*plist->next == NULL) return;
+	if (*plist->next->next == NULL) {
+		SListNode* last = (*plist)->next;
+		(*plist)->next = NULL;
 		free(last);
 	}
-	SListNode* cur = plist;
+	SListNode* cur = *plist;
 	while (cur->next->next != NULL) {
 		cur = cur->next;
 	}
@@ -58,15 +58,15 @@ void SListPopBack(SListNode* plist) {
 	free(last);
 }
 //单链表头删
-void SListPopFront(SListNode* plist) {
-	assert(plist);
-	if (plist->next->next == NULL) {
-		SListNode* front = plist->next;
-		plist->next = NULL;
+void SListPopFront(SListNode** plist) {
+	assert(*plist);
+	if ((*plist)->next->next == NULL) {
+		SListNode* front = (*plist)->next;
+		(*plist)->next = NULL;
 		free(front);
 	}
-	SListNode* front = plist->next;
-	plist->next = plist->next->next;
+	SListNode* front = (*plist)->next;
+	(*plist)->next = (*plist)->next->next;
 	free(front);
 }
 //单链表查找
