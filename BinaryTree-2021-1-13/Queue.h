@@ -3,8 +3,10 @@
 #include<assert.h>
 #include<stdlib.h>
 
+//ÉùÃ÷Ò»ÏÂ
+extern struct BinaryTreeNode;
+typedef struct BinaryTreeNode* QDataType;
 
-typedef int QDataType;
 typedef struct QListNode {
 	struct QListNode* _next;
 	QDataType _data;
