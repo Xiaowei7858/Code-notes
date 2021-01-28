@@ -137,34 +137,73 @@ void BubbleSort(int* a, int n) {
 // 快速排序hoare版本
 int PartSort1(int* a, int left, int right) {
 	int begin = left, end = right;
-	int index = a[end];
+	int index = end;
 
 	while (begin < end) {
-		while (begin < end && a[begin] <= index) {
+		//找大
+		while (begin < end && a[begin] <= a[index]) {
 			begin++;
 		}
-
-		while (begin < end && a[end] >= index) {
+		//找小
+		while (begin < end && a[end] >= a[index]) {
 			end--;
 		}
 
 		Swap(&a[begin], &a[end]);
 	}
 
-	Swap(&a[begin],)
+	Swap(&a[begin], &a[index]);
+	return  begin;
 }
 
 // 快速排序挖坑法
 int PartSort2(int* a, int left, int right) {
+	int begin = left, end = right;
+	int index = end;
+	int value = a[end];
 
+	while (begin < end) {
+		while (begin < end && a[begin] <= value) {
+			begin++;
+		}
+		a[index] = a[begin];
+		index = begin;
+
+		while (begin < end && a[end] >= value) {
+			end--;
+		}
+		a[index] = a[end];
+		index = end;
+	}
+
+	a[index] = value;
+	return index;
 }
 
 // 快速排序前后指针法
 int PartSort3(int* a, int left, int right) {
+	int cur = left, prev = left - 1;
+	int index = right;
 
+	while (cur < right) {
+		if (a[cur] < a[index] && ++prev != cur) {
+			Swap(&a[cur], &a[prev]);
+		}
+
+		cur++;
+	}
+
+	Swap(&a[++prev], &a[index]);
+
+	return prev;
 }
 void QuickSort(int* a, int left, int right) {
+	if (left >= right)
+		return;
 
+	int div = PartSort1(a, left, right);
+	PartSort1(a, left, div - 1);
+	PartSort1(a, div + 1, right);
 }
 
 // 快速排序 非递归实现
@@ -173,8 +212,16 @@ void QuickSortNonR(int* a, int left, int right) {
 }
 
 // 归并排序递归实现
-void MergeSort(int* a, int n) {
+void _MergeSort(int* a, int left, int right, int*temp) {
+	if (left >= right)
+		return;
 
+	int mid = (right - left) >> 1;
+	_MergeSort(a, left, mid, temp);
+	_MergeSort(a, mid + 1, right, temp);
+}
+void MergeSort(int* a, int n) {
+	
 }
 
 // 归并排序非递归实现
