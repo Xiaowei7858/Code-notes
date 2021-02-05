@@ -1,6 +1,7 @@
 
 #include<stdio.h>
 #include<assert.h>
+#include<stdlib.h>
 
 // 插入排序
 void InsertSort(int* a, int n);
@@ -19,6 +20,8 @@ void HeapSort(int* a, int n);
 void BubbleSort(int* a, int n);
 
 // 快速排序递归实现
+//三数取中
+int GetMidIndex(int* a, int begin, int end);
 // 快速排序hoare版本
 int PartSort1(int* a, int left, int right);
 // 快速排序挖坑法
