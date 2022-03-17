@@ -1,4 +1,4 @@
-FLAG=-std=c++11
+FLAG=-std=c++11 -lpthread
 .PHONY:all
 all:tcpClient tcpServer
 tcpClient:tcpClient.cc

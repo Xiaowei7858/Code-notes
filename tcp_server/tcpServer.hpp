@@ -11,6 +11,7 @@
 #include<netinet/in.h>
 #include<arpa/inet.h>
 #include<signal.h>
+#include<pthread.h>
 
 #define BACKLOG 5
 
@@ -53,7 +54,8 @@ public:
     //当客户端退出时，1.知道客户端退出了 2.服务器从while循环中退出 3.服务器关闭掉刚刚新来的链接所打开的套接字
 
     //io服务:先读取数据，然后将读取的数据发送出去
-    void service(int sock){
+    //没有使用该类的任何成员函数和成员变量
+    static void service(int sock){
         char buffer[1024];
         while(true){
             //read or wirte -> ok!
@@ -78,8 +80,15 @@ public:
         close(sock);
     }
 
-    void *serviceRoutine(void* arg){
-
+    //this指针会作为默认的参数被传进函数中，从而和线程函数参数(void*)不能匹配，不能通过编译
+    static void *serviceRoutine(void *arg){
+        //为了不发生内存泄露，及不发生主线程等子线程
+        pthread_detach(pthread_self());
+        std::cout << "create a new thread for IO" << std::endl;
+        int *p = (int *)arg;
+        int sock = *p;
+        service(sock);
+        delete p;
     }
 
     void start(){
@@ -101,11 +110,12 @@ public:
             std::cout << "get a new link ... " << cli_info << " sock: " << sock << std::endl;
             
             pthread_t tid;
-            pthread_create(&tid, nullptr, serviceRoutine, (void*)&sock);
+            int *p = new int(sock); //解决方法
+            pthread_create(&tid, nullptr, serviceRoutine, (void*)p); //bug, 直接传sock，子线程还没有创建好，主线程又accept新连接，会覆盖sock
             //pid_t id = fork();
             //if(id == 0){
             //    //防止子进程和父进程访问同一个文件,防止访问同一个文件符表
-            //    close(lsock);
+            //    close(lsock); //子进程以父进程为模板，创建...,包括文件描述符
             //    //进行io服务
             //    service(sock);
             //    //当父进程accept时，子进程有可能已经服务完毕了，子进程有可能继续往下运行，因此
@@ -118,10 +128,11 @@ public:
             
             //不推荐，fork会消耗大量资源
            // if(id == 0){
+           //     //子进程退出
            //     if(fork() > 0){
            //         exit(0);
            //     }
-
+           //     //孙子进程
            //     close(lsock);
            //     service(sock);
            //     exit(0);
