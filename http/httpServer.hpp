@@ -56,8 +56,10 @@ public:
             request[s] = 0;
             std::cout << request << std::endl;
             
-            std::string response = "HTTP/1.0 200 OK\r\n";
+            std::string response = "HTTP/1.0 302 NOT FOUND\r\n";
             response += "Content-type: text/html\r\n";
+            //重定向
+            response += "location: https://www.baidu.com";
             response += "\r\n";
             response += "\
                 <!DOCTYPE html>\
